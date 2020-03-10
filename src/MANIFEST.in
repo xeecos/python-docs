@@ -1,0 +1,3 @@
+setup.py
+global-include *.pyc
+global-exclude *.py
