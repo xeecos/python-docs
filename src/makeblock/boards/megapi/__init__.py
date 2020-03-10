@@ -19,16 +19,18 @@ SLOT4 = 4
 def create(device):
     """
     
-    Mega Pi Board : |mega_pi_more_info|
+    :description: Mega Pi Board - |mega_pi_more_info|
 
     .. |mega_pi_more_info| raw:: html
     
         <a href="http://docs.makeblock.com/diy-platform/en/electronic-modules/main-control-boards/megapi.html" target="_blank">More Info</a>
 
-    
+    :example:
+
     .. code-block:: python
         :linenos:
 
+        from time import sleep
         from makeblock import SerialPort
         from makeblock.boards import MegaPi
 

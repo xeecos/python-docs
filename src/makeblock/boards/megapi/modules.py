@@ -31,27 +31,68 @@ class _BaseModule:
         self._board.call(pack)
 
 class Servo(_BaseModule):
+    """
+        :description: Servo Driver - |servo_more_info|
+
+        .. |servo_more_info| raw:: html
+        
+            <a href="http://docs.makeblock.com/diy-platform/en/electronic-modules/motor-drivers/megapi-encoder-dc-driver-v1.html" target="_blank">More Info</a>
+
+        :param board: main controller
+        :type board: MegaPi
+        :param port: Port Number, range：PORT1～PORT4
+        :type port: int
+        :param slot: Slot Number, range：SLOT1～SLOT2
+        :type slot: int
+
+        :example:
+            
+        .. code-block:: python
+            :linenos:
+
+            servo = MegaPi.Servo(board,MegaPi.PORT1,MegaPi.SLOT1)
+            while True:
+                servo.set_angle(30)
+                sleep(1)
+                servo.set_angle(120)
+                sleep(1)
+
+    """
     def _init_module(self):
         self._pack = MegaPiPackData()
         self._pack.action = MegaPiPackData.ACTION_RUN
         self._pack.module = 0x0B
     
     def set_angle(self,angle):
+        """
+            set_angle
+
+            :param angle: angle (°), range: 0~180
+            :type angle: int
+        """
         self._pack.data = [self._pack.port,self._pack.slot,angle]
         self.call(self._pack)
 
 class DCMotor(_BaseModule):
     """
-        DC Motor Driver : |dc_motor_more_info|
+        :description: DC Motor Driver - |dc_motor_more_info|
 
         .. |dc_motor_more_info| raw:: html
         
             <a href="http://docs.makeblock.com/diy-platform/en/electronic-modules/motor-drivers/megapi-encoder-dc-driver-v1.html" target="_blank">More Info</a>
 
+        :param board: main controller
+        :type board: MegaPi
+        :param port: Port Number, range: PORT1～PORT4
+        :type port: int
+        :param slot: Slot Number, range: SLOT1～SLOT2
+        :type slot: int
+
+        :example:
+
         .. code-block:: python
             :linenos:
 
-            from time import sleep
             dcmotor = MegaPi.DCMotor(board,MegaPi.PORT1,MegaPi.SLOT1)
             while True:
                 dcmotor.run(40)
@@ -61,13 +102,6 @@ class DCMotor(_BaseModule):
                 dcmotor.run(-40)
                 sleep(5)
 
-        :param board: main controller
-        :type board: MegaPi
-        :param port: Port Number, range：PORT1～PORT4
-        :type port: int
-        :param slot: Slot Number, range：SLOT1～SLOT2
-        :type slot: int
-
     """
     def _init_module(self):
         self._pack = MegaPiPackData()
@@ -76,9 +110,9 @@ class DCMotor(_BaseModule):
 
     def run(self,speed):
         """
-            run
+            :description: motor run
 
-            :param speed: speed (percent)，range: -100~100
+            :param speed: speed (percent), range: -100~100
             :type speed: int
         """
         self._pack.data = [self._pack.port,self._pack.slot]
@@ -86,24 +120,97 @@ class DCMotor(_BaseModule):
         self.call(self._pack)
 
 class RGBLed(_BaseModule):
+    """
+        :description: RGB Led Driver - |rgbled_more_info|
+
+        .. |rgbled_more_info| raw:: html
+        
+            <a href="http://docs.makeblock.com/diy-platform/en/electronic-modules/motor-drivers/megapi-encoder-dc-driver-v1.html" target="_blank">More Info</a>
+
+        :param board: main controller
+        :type board: MegaPi
+        :param port: Port Number, range: PORT1～PORT4
+        :type port: int
+        :param slot: Slot Number, range: SLOT1～SLOT2
+        :type slot: int
+
+        :example:
+
+        .. code-block:: python
+            :linenos:
+
+            rgbled = MegaPi.RGBLed(board,MegaPi.PORT1,MegaPi.SLOT1)
+            while True:
+                rgbled.set_pixel(0,0xff,0x0,0x0)
+                sleep(1)
+                rgbled.set_pixel(0,0x0,0xff,0x0)
+                sleep(1)
+                rgbled.set_pixel(0,0x0,0x0,0xff)
+                sleep(1)
+
+    """
     def _init_module(self):
         self._pack = MegaPiPackData()
         self._pack.action = MegaPiPackData.ACTION_RUN
         self._pack.module = 0x08
 
-    def set_pixel(self,index,red,green,blue):
+    def set_color(self,index,red,green,blue):
+        """
+            :description: set color for led
+
+            :param index: led index, 0 for all, range: >=0
+            :type index: int
+            :param red: color red, range: 0~255
+            :type red: int
+            :param blue: color blue, range: 0~255
+            :type blue: int
+            :param green: color green, range: 0~255
+            :type green: int
+        """
         self._pack.data = [self._pack.port,self._pack.slot,index]
         self._pack.data.append(red)
         self._pack.data.append(green)
         self._pack.data.append(blue)
         self.call(self._pack)
 
-    def set_pixels(self,pixels):
+    def set_colors(self,pixels):
+        """
+            :description: set colors for all leds
+
+            :param pixels: rgb colors for all leds, [red1,green1,blue1,red2,green2,blue2...]
+            :type pixels: list
+        """
         self._pack.data = [self._pack.port,self._pack.slot]
         self._pack.data.extend(pixels)
         self.call(self._pack)
 
-class Stepper(_BaseModule):
+class StepperMotor(_BaseModule):
+    """
+        :description: Stepper Motor Driver - |stepper_more_info|
+
+        .. |stepper_more_info| raw:: html
+        
+            <a href="http://docs.makeblock.com/diy-platform/en/electronic-modules/motor-drivers/megapi-encoder-dc-driver-v1.html" target="_blank">More Info</a>
+
+        :param board: main controller
+        :type board: MegaPi
+        :param slot: Slot Number, range: SLOT1～SLOT4
+        :type slot: int
+
+        :example:
+
+        .. code-block:: python
+            :linenos:
+
+            stepper = MegaPi.StepperMotor(board,MegaPi.SLOT1)
+            position = 0
+            def on_finished(value):
+                global position
+                position = 5000 - position
+                stepper.move_to(position,10000,on_finished)
+            on_finished(position)
+
+    """
     def _init_module(self):
         self._pack = MegaPiPackData()
         self._pack.action = MegaPiPackData.ACTION_RUN
@@ -114,6 +221,17 @@ class Stepper(_BaseModule):
         self._callback(pack.data[0])
 
     def move_to(self,position,speed,callback):
+        """
+            :description: move to position with speed
+
+            :param position: absolute position ( steps )
+            :type position: int
+            :param speed: stepper motor speed
+            :type speed: int
+            :param callback: trig function when moving finish
+            :type callback: function
+            
+        """
         self._callback = callback
         self._pack.data = [0x6,self._pack.port]
         self._pack.data.extend(makeblock.utils.long2bytes(position))
@@ -121,15 +239,51 @@ class Stepper(_BaseModule):
         super().request(self._pack)
 
     def run(self,speed):
+        """
+            :description: stepper motor run with speed
+
+            :param speed: stepper motor speed
+            :type speed: int
+            
+        """
         self._pack.data = [0x2,self._pack.port]
         self._pack.data.extend(makeblock.utils.short2bytes(speed))
         super().call(self._pack)
 
     def set_home(self):
+        """
+            :description: set position to zero
+            
+        """
         self._pack.data = [0x4,self._pack.port]
         super().call(self._pack)
 
-class Encoder(_BaseModule):
+class EncoderMotor(_BaseModule):
+    """
+        :description: Encoder Motor Driver - |encoder_more_info|
+
+        .. |encoder_more_info| raw:: html
+        
+            <a href="http://docs.makeblock.com/diy-platform/en/electronic-modules/motor-drivers/megapi-encoder-dc-driver-v1.html" target="_blank">More Info</a>
+
+        :param board: main controller
+        :type board: MegaPi
+        :param slot: Slot Number, range: SLOT1～SLOT4
+        :type slot: int
+
+        :example:
+
+        .. code-block:: python
+            :linenos:
+
+            encoder = MegaPi.EncoderMotor(board,MegaPi.SLOT1)
+            position = 0
+            def on_finished(value):
+                position = 5000 - position
+                encoder.move_to(position,100,on_finished)
+            on_finished(position)
+
+    """
     def _init_module(self):
         self._pack = MegaPiPackData()
         self._pack.action = MegaPiPackData.ACTION_RUN
@@ -140,6 +294,17 @@ class Encoder(_BaseModule):
         self._callback(pack.data[0])
 
     def move_to(self,position,speed,callback):
+        """
+            :description: move to position with speed
+
+            :param position: absolute position ( steps )
+            :type position: int
+            :param speed: encoder motor speed
+            :type speed: int
+            :param callback: trig function when moving finish
+            :type callback: function
+            
+        """
         self._callback = callback
         self._pack.data = [0x6,self._pack.port]
         self._pack.data.extend(makeblock.utils.long2bytes(position))
@@ -147,11 +312,22 @@ class Encoder(_BaseModule):
         super().request(self._pack)
 
     def run(self,speed):
+        """
+            :description: encoder motor run with speed
+
+            :param speed: encoder motor speed
+            :type speed: int
+            
+        """
         self._pack.data = [0x2,self._pack.port]
         self._pack.data.extend(makeblock.utils.short2bytes(speed))
         super().call(self._pack)
 
     def set_home(self):
+        """
+            :description: set position to zero
+            
+        """
         self._pack.data = [0x4,self._pack.port]
         super().call(self._pack)
 
