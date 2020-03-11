@@ -12,7 +12,7 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('..//..//src'))
+sys.path.insert(0, os.path.abspath('..//src'))
 # -- Project information -----------------------------------------------------
 
 project = 'Python API for Makeblock'
@@ -25,10 +25,10 @@ master_doc = 'index'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx.ext.autodoc','sphinx_rtd_theme','sphinx.ext.autosummary','sphinx.ext.autosectionlabel']
+extensions = ['sphinx.ext.autodoc','sphinx_rtd_theme','sphinx.ext.autosummary','sphinx.ext.autosectionlabel','autoapi.extension']
 
 autodoc_default_flags = ['members']
-
+autoapi_dirs = ['../']
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 pygments_style = 'sphinx'
