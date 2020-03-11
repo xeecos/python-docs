@@ -1,16 +1,7 @@
-mCore
-==============================
-
-mCore.create()
------------------
+mCore API
+==========
 
 .. automodule:: makeblock.boards.mcore
     :members:
-    :undoc-members:
 
-Modules
--------
-
-.. automodule:: makeblock.boards.mcore.modules
-    :members:
-    :undoc-members:
+.. autoapimodule:: makeblock.boards.mcore.modules
