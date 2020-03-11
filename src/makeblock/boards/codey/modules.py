@@ -3,7 +3,6 @@ import struct
 from time import ctime, sleep
 import json
 import makeblock.utils
-import makeblock.boards.halocode as Halocode
 from makeblock.protocols.PackData import HalocodePackData
 
 class _BaseModule:

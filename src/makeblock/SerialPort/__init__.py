@@ -17,7 +17,7 @@ def create(port,baudrate=115200):
         :linenos:
 
         from makeblock import SerialPort
-        from makeblock.boards import MegaPi
+        from makeblock import MegaPi
 
         uart = SerialPort.create("COM3")
         board = MegaPi.create(uart)

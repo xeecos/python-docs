@@ -31,7 +31,7 @@ def create(device):
 
         from time import sleep
         from makeblock import SerialPort
-        from makeblock.boards import MegaPi
+        from makeblock import MegaPi
 
         uart = SerialPort.create("COM3")
         board = MegaPi.create(uart)
