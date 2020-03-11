@@ -18,7 +18,6 @@ SLOT4 = 4
 
 def create(device):
     """
-    
     :description: Mega Pi Board - |mega_pi_more_info|
 
     .. |mega_pi_more_info| raw:: html
