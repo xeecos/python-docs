@@ -4,5 +4,5 @@ MegaPi API
 .. automodule:: makeblock.boards.megapi
     :members:
 
-.. autoapimodule:: makeblock.boards.megapi.modules
+.. automodule:: makeblock.boards.megapi.modules
     :members:
