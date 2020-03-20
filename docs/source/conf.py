@@ -32,7 +32,7 @@ autodoc_member_order = 'bysource'
 autodoc_default_options = {
     'member-order': 'bysource'
 }
-autoapi_dirs = ['..//..//src']
+autoapi_dirs = ['..//..//src//makeblock']
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 pygments_style = 'sphinx'
