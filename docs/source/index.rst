@@ -24,7 +24,7 @@ Preparation
 .. toctree::
     :hidden:
     :maxdepth: 3
-    :caption: Makeblock Controller Boards
+    :caption: Controller Boards
 
     makeblock.boards.mcore
     makeblock.boards.meorion
@@ -35,6 +35,15 @@ Preparation
     makeblock.boards.mbuild
     makeblock.boards.codey
     makeblock.boards.neuron
+
+.. toctree::
+    :hidden:
+    :maxdepth: 3
+    :caption: Electronic Modules
+
+    rj25.modules
+    mbuild.modules
+    neuron.modules
 
 .. toctree::
     :hidden:

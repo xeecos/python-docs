@@ -2,10 +2,11 @@
 import makeblock.utils
 
 class NeuronPackData:
-    TYPE_SENSOR = 1
-    TYPE_DRIVER = 2
+    TYPE_REQUEST = 0
+    TYPE_CHANGE = 1
+    TYPE_PERIOD = 2
     def __init__(self,pack=[]):
-        self._type = NeuronPackData.TYPE_DRIVER
+        self._type = NeuronPackData.TYPE_REQUEST
         self._header = 0xf0
         self._idx = 0x0
         self._service = 0x0
@@ -109,6 +110,7 @@ class HalocodePackData():
     def __init__(self,buf=[]):
         self._type = HalocodePackData.TYPE_SCRIPT
         self._mode = HalocodePackData.TYPE_RUN_WITHOUT_RESPONSE
+        self._value_name = ""
         self._header = 0xf3
         self._datalen = 0x0
         self._idx = 0
@@ -185,6 +187,14 @@ class HalocodePackData():
     @property
     def subscribe_value(self):
         return self._subscribe_value
+
+    @property
+    def value_name(self):
+        return self._value_name
+
+    @value_name.setter
+    def value_name(self,value):
+        self._value_name = value
 
     @subscribe_value.setter
     def subscribe_value(self,value):

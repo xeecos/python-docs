@@ -68,11 +68,14 @@ class HalocodeProtocol(Protocol):
 
     def on_subscribe_response(self,pack):
         data_str = "".join([ chr(i) for i in pack.data[3:len(pack.data)]])
-        res = eval(data_str)
-        for i in res:
-            pack.subscribe_key = i
-            pack.subscribe_value = res[i]
-        super().on_subscribe_response(pack)
+        try:
+            res = eval(data_str)
+            for i in res:
+                pack.subscribe_key = i
+                pack.subscribe_value = res[i]
+                super().on_subscribe_response(pack)
+        except:
+            pass
 
     def check_response(self,resp_pack,list_pack):
         return list_pack.idx==resp_pack.idx

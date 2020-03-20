@@ -28,6 +28,22 @@ def bits2short(bits):
         return val
     return 0
 
+def bits2long(bits):
+    if(len(bits)==5):
+        val = 0
+        for i in range(5):
+            val+=bits[i]<<(i*7)
+        return val
+    return 0
+
+def bits2int8(bits):
+    val = 0
+    for i in range(2):
+        val+=bits[i]<<(i*7)
+    if val>127:
+        return val-256
+    return val
+
 def bytes2short(buf, position=0):
     v = [buf[position], buf[position+1]]
     return struct.unpack('<h', struct.pack('2B', *v))[0]

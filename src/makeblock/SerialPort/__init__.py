@@ -5,7 +5,7 @@ import sys
 import threading
 from multiprocessing import Array, Manager, Process
 from time import ctime, sleep
-
+import serial.tools.list_ports
 import serial
 import makeblock.utils
 
@@ -24,10 +24,10 @@ def create(port,baudrate=115200):
 
     """
     uart = SerialPort(port,baudrate)
-    _ports.append(uart)
     return uart
 
 def __exiting(signal, frame):
+    global _ports
     for uart in _ports:
         uart.exit()
     sys.exit(0)
@@ -38,12 +38,15 @@ class SerialPort():
     """
     """
     def __init__(self, port, baudrate=115200, timeout=1):
+        global _ports
+        _ports.append(self)
         self.exiting = False
         self._responses = []
         self._ser = serial.Serial(port,baudrate)
+        self._ser.timeout = 1
         sleep(1)
-        th = threading.Thread(target=self._on_read,args=(self._callback,))
-        th.start()
+        self._thread = threading.Thread(target=self._on_read,args=(self._callback,))
+        self._thread.start()
 
     def setup(self,callback):
         self._responses.append(callback)
@@ -53,14 +56,13 @@ class SerialPort():
             method(received)
 
     def _on_read(self,callback):
-        while 1:
+        while True:
             if self.exiting:
                 break
             if self.is_open():
-                n = self.in_waiting()
-                for i in range(n):
-                    r = ord(self.read())
-                    callback(r)
+                buf = self.read()
+                if len(buf)==1:
+                    callback(buf[0])
                 sleep(0.002)
             else:    
                 sleep(0.5)
@@ -85,6 +87,8 @@ class SerialPort():
 
     def exit(self):
         self.exiting = True
+        self._thread.join()
+        self.close()
 
     @staticmethod
     def list():
@@ -100,21 +104,4 @@ class SerialPort():
         :param: 无
         :return: 串口列表
         """
-
-        if sys.platform.startswith('win'):
-            ports = ['COM%s' % (i + 1) for i in range(256)]
-        elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
-            ports = glob.glob('/dev/tty[A-Za-z]*')
-        elif sys.platform.startswith('darwin'):
-            ports = glob.glob('/dev/tty.*')
-        else:
-            raise EnvironmentError('Unsupported platform')
-        result = []
-        for port in ports:
-            try:
-                s = serial.Serial(port)
-                s.close()
-                result.append(port)
-            except (OSError, serial.SerialException):
-                pass
-        return result
+        return serial.tools.list_ports.comports()

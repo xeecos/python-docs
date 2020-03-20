@@ -1,7 +1,5 @@
-mCore API
+mCore
 ==========
 
-.. automodule:: makeblock.boards.mcore
+.. autoapimodule:: makeblock.boards.mcore
     :members:
-
-.. autoapimodule:: makeblock.boards.mcore.modules
