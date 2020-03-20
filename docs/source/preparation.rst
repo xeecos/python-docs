@@ -9,4 +9,4 @@ Preparation
 
 2. install package from pypi
     
-    >>> pip3 install pyserial makeblock
+    >>> pip3 install makeblock

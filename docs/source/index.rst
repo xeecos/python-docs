@@ -8,7 +8,7 @@ Preparation
    <a href="https://github.com/Makeblock-official/Makeblock-Libraries/tree/master/examples" target="_blank">Github</a>
 
 2. install package from pypi
-    >>> pip3 install pyserial makeblock
+    >>> pip3 install makeblock
 
 
 .. toctree::
