@@ -28,7 +28,8 @@ master_doc = 'index'
 extensions = ['sphinx.ext.autodoc','sphinx_rtd_theme','sphinx.ext.autosummary','sphinx.ext.autosectionlabel','autoapi.extension']
 
 autodoc_default_flags = ['members']
-autoapi_dirs = ['../']
+autodoc_member_order = 'bysource'
+autoapi_dirs = ['../../src']
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 pygments_style = 'sphinx'
