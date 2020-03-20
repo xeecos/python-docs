@@ -29,6 +29,9 @@ extensions = ['sphinx.ext.autodoc','sphinx_rtd_theme','sphinx.ext.autosummary','
 
 autodoc_default_flags = ['members']
 autodoc_member_order = 'bysource'
+autodoc_default_options = {
+    'member-order': 'bysource'
+}
 autoapi_dirs = ['../../src']
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
