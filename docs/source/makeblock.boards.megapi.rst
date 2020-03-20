@@ -1,5 +1,5 @@
 MegaPi
 ==========
 
-.. autoapimodule:: makeblock.boards.megapi
+.. automodule:: makeblock.boards.megapi
     :members:
